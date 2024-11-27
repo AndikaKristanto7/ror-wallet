@@ -33,21 +33,6 @@ class Api::V1::UsersController < ApplicationController
       head :no_content
     end
 
-    def deposit
-      @user = User.where(user_acc_number: params[:acc_number]).take
-      @pin = @user.user_pin
-      if !@user  || @pin != params[:pin]
-        render json: @user.errors, status: :unprocessable_entity
-      end
-      @debit = Debit.new
-      @debit.debit_user_id = @user.id
-      @debit.debit_amount = params[:deposit_amount]
-      @debit.status = 2
-      @debit.save
-      @user.update(user_last_balance: @user.user_last_balance + @debit.debit_amount)
-      render json: @user
-    end
-
     private
 
     def set_users

@@ -9,8 +9,14 @@ Rails.application.routes.draw do
   # root "posts#index"
   namespace :api do
     namespace :v1 do 
-      resources :users  
-      post "user/deposit", to: "users#deposit"
+      resources :users
+      
+      scope "/transaction" do 
+        post "/deposit", to: "transactions#deposit"
+        post "/withdraw", to: "transactions#withdraw"
+        get "/debits", to: "transactions#get_all_debit_trx"
+        get "/credits", to: "transactions#get_all_credit_trx"
+      end 
     end
   end
 end
