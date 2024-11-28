@@ -1,9 +1,9 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  uts_stock_id: 1
-  uts_trx_id: 1
+  st_stock_id: 1
+  st_trx_id: MyString
 
 two:
-  uts_stock_id: 1
-  uts_trx_id: 1
+  st_stock_id: 1
+  st_trx_id: MyString
