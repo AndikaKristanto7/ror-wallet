@@ -6,10 +6,9 @@ class Api::V1::TransactionsController < ApplicationController
     @debit = Debit.new
     @debit.debit_user_id = @user.id
     @debit.debit_amount = params[:deposit_amount]
-    @debit.status = 2
+    @debit.status = 1
     @debit.save
-    @user.update(user_last_balance: @user.user_last_balance + @debit.debit_amount)
-    render json: @user
+    render json: @debit
   end
 
   def get_all_debit_trx
@@ -26,7 +25,7 @@ class Api::V1::TransactionsController < ApplicationController
       @credit = Credit.new
       @credit.credit_user_id = @user.id
       @credit.credit_amount = withdraw_amount
-      @credit.status = 2
+      @credit.status = 1
       @credit.save
       @user.update(user_last_balance: @user.user_last_balance - @credit.credit_amount)
       render json: @user
@@ -88,9 +87,6 @@ class Api::V1::TransactionsController < ApplicationController
   end 
 
   def get_user_balance
-    user_id = @user.id
-    sum_debit = Debit.where(debit_user_id: user_id,status: ['2']).sum(:debit_amount)
-    sum_credit = Credit.where(credit_user_id: user_id,status: ['1','2']).sum(:credit_amount)
-    @balance = Integer(sum_debit) - Integer(sum_credit)
-  end 
+    @balance = @user.get_user_balance
+  end
 end

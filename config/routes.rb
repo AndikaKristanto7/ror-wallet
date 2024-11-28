@@ -17,6 +17,20 @@ Rails.application.routes.draw do
         post "/transfer", to: "transactions#transfer"
         get "/debits", to: "transactions#get_all_debit_trx"
         get "/credits", to: "transactions#get_all_credit_trx"
+      end
+
+      scope "/team" do 
+        post '/', to: "team#create"
+        scope "/unresponded" do 
+          get "/deposits", to: "team#get_unresponded_deposits"
+          get "/withdraws", to: "team#get_unresponded_withdraws"
+        end
+
+        scope "/response" do 
+          post "/deposit", to: "team#response_deposit"
+          post "/withdraw", to: "team#response_withdraw"
+        end
+
       end 
     end
   end
