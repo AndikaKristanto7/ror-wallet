@@ -1,0 +1,2 @@
+class StockTrx < ApplicationRecord
+end
