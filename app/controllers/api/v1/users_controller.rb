@@ -12,7 +12,6 @@ class Api::V1::UsersController < ApplicationController
 
     def create
       @user = User.new(users_params)
-      @user.user_pin = 123456
       if @user.save
         render json: @user, status: :created
       else
@@ -40,6 +39,6 @@ class Api::V1::UsersController < ApplicationController
     end
 
     def users_params
-      params.require(:user).permit(:user_name, :user_acc_number)
+      params.require(:user).permit(:user_name, :user_acc_number,:user_pin)
     end
 end

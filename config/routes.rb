@@ -14,6 +14,7 @@ Rails.application.routes.draw do
       scope "/transaction" do 
         post "/deposit", to: "transactions#deposit"
         post "/withdraw", to: "transactions#withdraw"
+        post "/transfer", to: "transactions#transfer"
         get "/debits", to: "transactions#get_all_debit_trx"
         get "/credits", to: "transactions#get_all_credit_trx"
       end 
