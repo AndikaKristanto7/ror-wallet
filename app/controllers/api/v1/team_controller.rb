@@ -1,7 +1,7 @@
+require 'constants'
 class Api::V1::TeamController < ApplicationController
   before_action :get_team, except: [:create]
-  # before_action :get_user_balance, only:[:withdraw,:transfer]
-
+  
   def create
     @team = Team.new
     @team.team_u_name = params[:uname]
@@ -14,17 +14,17 @@ class Api::V1::TeamController < ApplicationController
   end
 
   def get_unresponded_debits
-    @debit = Debit.where(status: ['1']).order(:id).take(10)
+    @debit = Debit.where(status: [Constants::TRX_STATUS_DEFAULT]).order(:id).take(10)
     render json: @debit
   end
 
   def get_unresponded_credits
-    @credit = Credit.where(status: ['1']).order(:id).take(10)
+    @credit = Credit.where(status: [Constants::TRX_STATUS_DEFAULT]).order(:id).take(10)
     render json: @credit
   end
 
   def response_debit_trx
-    @debit = Debit.where(id: params[:debit_id],status: ['1']).take
+    @debit = Debit.where(id: params[:debit_id],status: [Constants::TRX_STATUS_DEFAULT]).take
     if @debit == nil
       render json: {'code': "error debit not found"}, status: :unprocessable_entity
     else
@@ -38,7 +38,7 @@ class Api::V1::TeamController < ApplicationController
   end
 
   def response_credit_trx
-    @credit = Credit.where(id: params[:credit_id],status: ['1']).take
+    @credit = Credit.where(id: params[:credit_id],status: [Constants::TRX_STATUS_DEFAULT]).take
     if @credit == nil
       render json: {'code': "error"}, status: :unprocessable_entity
     else

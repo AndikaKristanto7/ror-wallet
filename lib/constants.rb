@@ -1,0 +1,8 @@
+class Constants
+  TRX_STATUS_REJECTED = "0"
+  TRX_STATUS_DEFAULT = "1"
+  TRX_STATUS_APPROVED = "2"
+
+  TRX_TYPE_CREDIT = "1"
+  TRX_TYPE_DEBIT = "2"
+end

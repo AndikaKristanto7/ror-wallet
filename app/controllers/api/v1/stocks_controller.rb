@@ -1,5 +1,6 @@
 require "latest_stock_price.rb"
 class Api::V1::StocksController < ApplicationController
+  
   def get_stocks
     @stocks = LatestStockPrice.get_latest_price
     render json: @stocks
