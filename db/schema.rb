@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2024_11_28_105850) do
+ActiveRecord::Schema[8.0].define(version: 2024_11_29_074519) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -43,10 +43,11 @@ ActiveRecord::Schema[8.0].define(version: 2024_11_28_105850) do
 
   create_table "stock_trxes", force: :cascade do |t|
     t.integer "st_stock_id"
-    t.string "st_trx_id"
+    t.integer "st_trx_id"
     t.enum "st_type", enum_type: "st_type"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "st_amount_share"
   end
 
   create_table "stocks", force: :cascade do |t|

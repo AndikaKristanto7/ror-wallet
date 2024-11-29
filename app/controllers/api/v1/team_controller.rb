@@ -13,22 +13,22 @@ class Api::V1::TeamController < ApplicationController
     end
   end
 
-  def get_unresponded_deposits
+  def get_unresponded_debits
     @debit = Debit.where(status: ['1']).order(:id).take(10)
     render json: @debit
   end
 
-  def get_unresponded_withdraws
+  def get_unresponded_credits
     @credit = Credit.where(status: ['1']).order(:id).take(10)
     render json: @credit
   end
 
-  def response_deposit
+  def response_debit_trx
     @debit = Debit.where(id: params[:debit_id],status: ['1']).take
     if @debit == nil
-      render json: {'code': "error"}, status: :unprocessable_entity
+      render json: {'code': "error debit not found"}, status: :unprocessable_entity
     else
-      @debit.update(status:params[:status],debit_responded_by:@team.id,debit_responded_at:DateTime.current.to_date)
+      @debit.update(status:params[:status],debit_responded_by:@team.id,debit_responded_at:DateTime.now)
       @user_id = @debit.debit_user_id
       get_user(@user_id)
       get_user_balance()
@@ -37,7 +37,7 @@ class Api::V1::TeamController < ApplicationController
     end
   end
 
-  def response_withdraw
+  def response_credit_trx
     @credit = Credit.where(id: params[:credit_id],status: ['1']).take
     if @credit == nil
       render json: {'code': "error"}, status: :unprocessable_entity
