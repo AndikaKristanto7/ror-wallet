@@ -42,7 +42,7 @@ class Api::V1::TeamController < ApplicationController
     if @credit == nil
       render json: {'code': "error"}, status: :unprocessable_entity
     else
-      @credit.update(status:params[:status],credit_responded_by:@team.id,credit_responded_at:DateTime.current.to_date)
+      @credit.update(status:params[:status],credit_responded_by:@team.id,credit_responded_at:DateTime.now)
       @user_id = @credit.credit_user_id
       get_user(@user_id)
       get_user_balance()

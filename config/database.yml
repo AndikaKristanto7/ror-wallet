@@ -22,8 +22,8 @@ default: &default
 
 development:
   <<: *default
-  # database: atask_wallet_development
-  database: <%= ENV.fetch("DATABASE_NAME") {"atask_wallet"} %>_development
+  # database: wallet_development
+  database: <%= ENV.fetch("DATABASE_NAME") {"wallet"} %>_development
   adapter: postgresql
   encoding: unicode
   pool: 5
@@ -62,7 +62,7 @@ development:
 # Do not set this db to the same as development or production.
 test:
   <<: *default
-  database: <%= ENV.fetch("DATABASE_NAME") {"atask_wallet"} %>_test
+  database: <%= ENV.fetch("DATABASE_NAME") {"wallet"} %>_test
   adapter: postgresql
   encoding: unicode
   pool: 5
@@ -92,18 +92,18 @@ test:
 production:
   primary: &primary_production
     <<: *default
-    database: atask_wallet_production
-    username: atask_wallet
-    password: <%= ENV["ATASK_WALLET_DATABASE_PASSWORD"] %>
+    database: wallet_production
+    username: wallet
+    password: <%= ENV["WALLET_DATABASE_PASSWORD"] %>
   cache:
     <<: *primary_production
-    database: atask_wallet_production_cache
+    database: wallet_production_cache
     migrations_paths: db/cache_migrate
   queue:
     <<: *primary_production
-    database: atask_wallet_production_queue
+    database: wallet_production_queue
     migrations_paths: db/queue_migrate
   cable:
     <<: *primary_production
-    database: atask_wallet_production_cable
+    database: wallet_production_cable
     migrations_paths: db/cable_migrate

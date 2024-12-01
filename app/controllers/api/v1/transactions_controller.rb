@@ -6,7 +6,7 @@ class Api::V1::TransactionsController < ApplicationController
   before_action :get_user_to_transfer, only:[:transfer]
 
   def deposit
-    @debit = Debit.create_trx(@user.id,params[':deposit_amount'],Constants::TRX_STATUS_DEFAULT)
+    @debit = Debit.create_trx(@user.id,params[:deposit_amount],Constants::TRX_STATUS_DEFAULT)
     render json: @debit
   end
 
@@ -49,7 +49,7 @@ class Api::V1::TransactionsController < ApplicationController
     if((@balance - @total_price) < 0)
       render json: {'code': "error",'msg': "insufficient wallet balance"}, status: :unprocessable_entity
     else
-      @trx_type = 1
+      @trx_type = Constants::TRX_TYPE_CREDIT
       @amount_share = @buy_share_amount
       do_stock_trx(@trx_type,@total_price,@amount_share)
       render json: @st
@@ -63,7 +63,7 @@ class Api::V1::TransactionsController < ApplicationController
       render json: {'code': "error",'msg': "insufficient share owned"}, status: :unprocessable_entity
     else
       @total_price = @stock.stock_last_price * @sell_share_amount   
-      @trx_type = 2
+      @trx_type = Constants::TRX_TYPE_DEBIT
       @amount_share = @buy_share_amount
       do_stock_trx(@trx_type,@total_price,@amount_share) 
       render json: @st
@@ -71,12 +71,12 @@ class Api::V1::TransactionsController < ApplicationController
   end
 
   def get_buy_stock_trx
-    @st = StockTrx.joins('INNER JOIN "credits" "credit" ON "credit"."id" = "stock_trxes"."st_trx_id"').where("credit.credit_user_id": @user.id,st_type: ['1']).all
+    @st = StockTrx.joins('INNER JOIN "credits" "credit" ON "credit"."id" = "stock_trxes"."st_trx_id"').where("credit.credit_user_id": @user.id,st_type: [Constants::TRX_TYPE_CREDIT]).all
     render json: @st
   end
 
   def get_sell_stock_trx
-    @st = StockTrx.joins('INNER JOIN "debits" "debit" ON "debit"."id" = "stock_trxes"."st_trx_id"').where("debit.debit_user_id": @user.id,st_type: ['2']).all
+    @st = StockTrx.joins('INNER JOIN "debits" "debit" ON "debit"."id" = "stock_trxes"."st_trx_id"').where("debit.debit_user_id": @user.id,st_type: [Constants::TRX_TYPE_DEBIT]).all
     render json: @st
   end
 
@@ -116,22 +116,24 @@ class Api::V1::TransactionsController < ApplicationController
   end 
 
   def do_stock_trx(trx_type, total_price, amount_share)
-    if trx_type == 1
+    if trx_type == Constants::TRX_TYPE_CREDIT
       @credit = Credit.create_trx(@user.id,total_price,Constants::TRX_STATUS_DEFAULT)
       @user.update(user_last_balance: @user.user_last_balance - @credit.credit_amount)
       trx_id = @credit.id
-      insert_stock_trx(trx_type, amount_share,trx_id)
+      @st = insert_stock_trx(trx_type, amount_share,trx_id)
+      
     end
 
-    if trx_type == 2
+    if trx_type == Constants::TRX_TYPE_DEBIT
       @debit = Debit.create_trx(@user.id,total_price,Constants::TRX_STATUS_DEFAULT)
       trx_id = @debit.id
-      insert_stock_trx(trx_type, amount_share,trx_id)
+      @st = insert_stock_trx(trx_type, amount_share,trx_id)
     end
   end
   
   def insert_stock_trx(trx_type, amount_share,trx_id)
     @st = StockTrx.create_trx(@stock.id,trx_id,trx_type,amount_share)
+    @st
   end
 
   def get_user_balance
