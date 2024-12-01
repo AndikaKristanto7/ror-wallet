@@ -19,9 +19,7 @@ CREATE DATABASE wallet_development;
 \q
 
 ```
-Create a .env file in the server directory and add your session secret (this can be any string) and other env keys below:
-
-Get your rapidapi key by register to rapidapi : https://rapidapi.com/suneetk92/api/latest-stock-price
+Create a .env file in the server directory. env keys list below:
 
 ```
 ENVIRONMENT=development
@@ -30,6 +28,8 @@ DATABASE_USERNAME=andika
 DATABASE_PASSWORD=123456
 RAPIDAPI_KEY=YOUR_RAPIDAPI_KEY
 ```
+Get your rapidapi key by register to rapidapi : https://rapidapi.com/suneetk92/api/latest-stock-price
+
 In the rails folder, install dependencies and migrate the database schema & seed the database:
 
 ```
