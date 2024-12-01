@@ -125,7 +125,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"uname\":\"Andika\",\r\n    \"pass\":\"andikak\",\r\n    \"credit_id\" : 40,\r\n    \"status\" : 2\r\n}",
+									"raw": "{\r\n    \"uname\":\"Andika\",\r\n    \"pass\":\"andikak\",\r\n    \"credit_id\" : 96,\r\n    \"status\" : 2\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -308,7 +308,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"acc_number\" : \"123456\",\r\n    \"pin\" : 123456,\r\n    \"deposit_amount\" : 1000000\r\n\r\n}",
+							"raw": "{\r\n    \"acc_number\" : \"123456\",\r\n    \"pin\" : 123456,\r\n    \"withdraw_amount\" : 1000000\r\n\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -316,7 +316,7 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:3000/api/v1/transaction/deposit",
+							"raw": "localhost:3000/api/v1/transaction/withdraw",
 							"host": [
 								"localhost"
 							],
@@ -325,7 +325,7 @@
 								"api",
 								"v1",
 								"transaction",
-								"deposit"
+								"withdraw"
 							]
 						}
 					},
