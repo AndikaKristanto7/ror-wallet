@@ -1,24 +1,54 @@
-# README
+# Ruby On Rails : Wallet
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Simple Wallet App Using Ruby On Rail
 
-Things you may want to cover:
+## Pre-requisite
+1. Ruby (https://www.ruby-lang.org/en/documentation/installation/) 
+(version : ruby 3.3.6)
+2. PostgreSQL (https://www.postgresql.org/download/)
+3. Rails (https://guides.rubyonrails.org/v5.2/getting_started.html)
+(version : 8.0.0)
+4. Postman (https://www.postman.com/)
+5. Pgadmin (https://www.pgadmin.org/download/) (optional)
 
-* Ruby version
+## Create Database
+```
+psql
+CREATE DATABASE wallet;
+CREATE DATABASE wallet_development;
+\q
 
-* System dependencies
+```
+Create a .env file in the server directory and add your session secret (this can be any string) and other env keys below:
 
-* Configuration
+Get your rapidapi key by register to rapidapi : https://rapidapi.com/suneetk92/api/latest-stock-price
 
-* Database creation
+```
+ENVIRONMENT=development
+DATABASE_NAME=wallet
+DATABASE_USERNAME=andika
+DATABASE_PASSWORD=123456
+RAPIDAPI_KEY=YOUR_RAPIDAPI_KEY
+```
+In the rails folder, install dependencies and migrate the database schema & seed the database:
 
-* Database initialization
+```
+cd ror-wallet
+bundle install
+rails db:migrate
+rails db:seed
+```
 
-* How to run the test suite
+### Running the Application Locally
 
-* Services (job queues, cache servers, search engines, etc.)
+In one terminal, start the API:
 
-* Deployment instructions
+```
+cd ror-wallet
+rails server
+```
 
-* ...
+Import Postman Collection
+
+Filename : 
+RoR Wallet Collection.postman_collection.json
