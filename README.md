@@ -48,3 +48,5 @@ rails server
 
 Filename : 
 RoR Wallet Collection.postman_collection.json
+
+Hit RoR Wallet Collection > Stocks > Sync Stocks (localhost:3000/api/v1/stocks/sync) to sync from rapidapi response to database
